@@ -1,6 +1,7 @@
 # Taller de Docker para microservicios
 
 **Integrantes:** Camilo Andrés Sánchez Martínez (1152329) · Omar Fernando Suárez Oviedo (1152216)
+
 **Materia:** Desarrollo de aplicaciones basadas en microservicios, UFPS
 
 Los microservicios **Catálogo** (puerto 8081) y **Pedidos** (puerto 8082) del laboratorio anterior, empaquetados en contenedores y levantados juntos con Docker Compose.
@@ -19,6 +20,8 @@ Los microservicios **Catálogo** (puerto 8081) y **Pedidos** (puerto 8082) del l
 ```bash
 docker compose up --build
 ```
+
+> **Nota:** Con PostgreSQL el catálogo arranca vacío: primero creen un producto con `POST /productos`. Las evidencias de H2 se tomaron antes de agregar PostgreSQL.
 
 Probar un pedido:
 
@@ -67,7 +70,7 @@ El Dockerfile utiliza una estrategia de compilación multi-etapa (*multi-stage b
 
 Si fuera de una sola etapa:
 - La imagen final arrastraría todo el JDK, las herramientas de compilación de Maven, los archivos fuente del proyecto y la caché local de dependencias (`~/.m2`).
-- El tamaño de la imagen aumentaría drásticamente (pasando de ~200-300 MB a fácilmente 800 MB - 1.2 GB o más).
+- El tamaño de la imagen aumentaría drásticamente (en este caso la imagen final compilada mide ~173 MB de contenido / 601 MB en disco con solo el JRE, mientras que con el entorno de compilación completo superaría fácilmente 1 GB a 1.2 GB).
 - Aumentaría la superficie de ataque y riesgos de seguridad en producción al incluir herramientas y fuentes innecesarias.
 
 ### 4. ¿Qué pasó con el producto que crearon después de reiniciar Catálogo? ¿Por qué? ¿Qué se necesitaría para que no se pierda?
